@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import './Shop.css';
-
 const arenas = [
   {
     sku: 'bronze-arena',
