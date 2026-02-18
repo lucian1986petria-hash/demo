@@ -31,23 +31,15 @@ const App = () => {
         metadata: { id: "test-1" },
       }, {
         onReadyForServerApproval: async (paymentId: string) => {
-          console.log("Trimitem aprobarea la server...");
-          
-          // PASUL CRITIC: Aici sunam la Backend-ul tau de Vercel
-          try {
-            await fetch('https://demo-flame-eta-27.vercel.app/payments/approve', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ paymentId }),
-            });
-            console.log("Cerere de aprobare trimisa!");
-          } catch (e) {
-            console.error("Serverul nu a raspuns:", e);
-          }
+          // Apelam serverul nou din folderul api
+          await fetch('https://demo-flame-eta-27.vercel.app/api/index', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paymentId }),
+          });
         },
         onReadyForServerCompletion: async (paymentId: string, txid: string) => {
-          console.log("Finalizam plata...");
-          await fetch('https://demo-flame-eta-27.vercel.app/payments/complete', {
+          await fetch('https://demo-flame-eta-27.vercel.app/api/index', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ paymentId, txid }),
@@ -65,7 +57,7 @@ const App = () => {
   return (
     <div style={{ backgroundColor: '#000', color: '#fff', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', fontFamily: 'sans-serif', textAlign: 'center' }}>
       <h1 style={{ color: '#8A2BE2', fontSize: '3rem' }}>FitPot 🏃‍♂️</h1>
-      <p style={{ color: '#aaa' }}>Status: Gata de actiune</p>
+      <p style={{ color: '#aaa' }}>Status: Infrastructura Activa</p>
       <div style={{ padding: '20px', border: '1px solid #333', borderRadius: '15px', backgroundColor: '#111' }}>
         <p>Miza de test: 0.1 Pi</p>
         <button 
@@ -76,7 +68,3 @@ const App = () => {
         </button>
       </div>
     </div>
-  );
-};
-
-ReactDOM.render(<App />, document.getElementById('root'));
