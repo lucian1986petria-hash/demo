@@ -1,65 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const FitPotApp = () => {
-  const containerStyle: React.CSSProperties = {
-    textAlign: 'center',
-    padding: '40px 20px',
-    fontFamily: 'sans-serif',
-    backgroundColor: '#121212',
-    color: '#ffffff',
-    minHeight: '100vh'
-  };
-
-  const cardStyle: React.CSSProperties = {
-    backgroundColor: '#1e1e1e',
-    borderRadius: '20px',
-    padding: '30px',
-    marginTop: '20px',
-    border: '1px solid #333',
-    boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
-  };
-
-  const buttonStyle: React.CSSProperties = {
-    backgroundColor: '#8A2BE2',
-    color: 'white',
-    border: 'none',
-    padding: '15px 30px',
-    borderRadius: '30px',
-    fontSize: '18px',
-    fontWeight: 'bold',
-    marginTop: '20px',
-    cursor: 'pointer'
-  };
-
-  return (
-    <div style={containerStyle}>
-      <h1 style={{ color: '#A020F0', fontSize: '3rem', marginBottom: '10px' }}>FitPot</h1>
-      <p style={{ fontSize: '1.2rem', color: '#bbb' }}>Mergi. Câștigă. Repetă.</p>
-      
-      <div style={cardStyle}>
-        <div style={{ fontSize: '1.5rem', marginBottom: '10px' }}>👟 Pași astăzi</div>
-        <div style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#A020F0' }}>0</div>
-        <hr style={{ borderColor: '#333', margin: '20px 0' }} />
-        <p>Miza în Arena: <strong>10 Pi</strong></p>
-        <button 
-          style={buttonStyle}
-          onClick={() => window.alert('Se conectează la Pi Wallet...')}
-        >
-          INTRĂ ÎN ARENĂ
-        </button>
-      </div>
-
-      <p style={{ marginTop: '40px', fontSize: '0.8rem', color: '#555' }}>
-        Portofel Destinație: GD6LEB...XNHP
-      </p>
+// Definim totul aici, fara importuri externe care pot crapa
+const App = () => (
+  <div style={{ backgroundColor: '#000', color: '#fff', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', fontFamily: 'sans-serif' }}>
+    <h1 style={{ color: '#8A2BE2', fontSize: '40px' }}>FitPot 🏃‍♂️</h1>
+    <p>Versiunea 1.0 - Infrastructură activă</p>
+    <div style={{ padding: '20px', border: '1px solid #333', borderRadius: '10px', textAlign: 'center' }}>
+      <p>Portofel configurat: <strong>GD6LEB...XNHP</strong></p>
+      <button style={{ padding: '10px 20px', borderRadius: '5px', border: 'none', backgroundColor: '#8A2BE2', color: '#fff', cursor: 'pointer' }}>
+        Test Plată Pi
+      </button>
     </div>
-  );
-};
-
-ReactDOM.render(
-  <React.StrictMode>
-    <FitPotApp />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </div>
 );
+
+ReactDOM.render(<App />, document.getElementById('root'));
