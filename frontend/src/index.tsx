@@ -31,15 +31,14 @@ const App = () => {
         metadata: { id: "test-1" },
       }, {
         onReadyForServerApproval: async (paymentId: string) => {
-          // Apelam serverul nou din folderul api
-          await fetch('https://demo-flame-eta-27.vercel.app/api/index', {
+          await fetch('https://demo-flame-eta-27.vercel.app/api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ paymentId }),
           });
         },
         onReadyForServerCompletion: async (paymentId: string, txid: string) => {
-          await fetch('https://demo-flame-eta-27.vercel.app/api/index', {
+          await fetch('https://demo-flame-eta-27.vercel.app/api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ paymentId, txid }),
@@ -57,7 +56,7 @@ const App = () => {
   return (
     <div style={{ backgroundColor: '#000', color: '#fff', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', fontFamily: 'sans-serif', textAlign: 'center' }}>
       <h1 style={{ color: '#8A2BE2', fontSize: '3rem' }}>FitPot 🏃‍♂️</h1>
-      <p style={{ color: '#aaa' }}>Status: Infrastructura Activa</p>
+      <p style={{ color: '#aaa' }}>Status: Gata de actiune</p>
       <div style={{ padding: '20px', border: '1px solid #333', borderRadius: '15px', backgroundColor: '#111' }}>
         <p>Miza de test: 0.1 Pi</p>
         <button 
@@ -68,3 +67,7 @@ const App = () => {
         </button>
       </div>
     </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
