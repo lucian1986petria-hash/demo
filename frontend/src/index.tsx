@@ -2,16 +2,14 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 const App = () => {
-  // Pasul 1: Autentificarea (se intampla cand se deschide aplicatia)
   useEffect(() => {
     const login = async () => {
       try {
         if ((window as any).Pi) {
           const scopes = ['username', 'payments'];
-          const auth = await (window as any).Pi.authenticate(scopes, (payment: any) => {
-            console.log("Plata incompleta gasita:", payment);
+          await (window as any).Pi.authenticate(scopes, (payment: any) => {
+            console.log("Plata incompleta:", payment);
           });
-          console.log("Te-ai logat ca:", auth.user.username);
         }
       } catch (err) {
         console.error("Eroare la logare:", err);
@@ -20,7 +18,6 @@ const App = () => {
     login();
   }, []);
 
-  // Pasul 2: Plata (cand apesi butonul)
   const handlePayment = async () => {
     if (!(window as any).Pi) {
       alert("Deschide in Pi Browser!");
@@ -29,36 +26,55 @@ const App = () => {
 
     try {
       (window as any).Pi.createPayment({
-        amount: 0.1, // Testam cu o suma mica
+        amount: 0.1,
         memo: "Test FitPot",
         metadata: { id: "test-1" },
       }, {
-        onReadyForServerApproval: (paymentId: string) => {
-          console.log("Asteptam aprobarea serverului...", paymentId);
-          // Aici Pi cere un 'ACK' de la backend. 
-          // Pentru test, uneori trece si fara daca e configurat corect in Portal.
+        onReadyForServerApproval: async (paymentId: string) => {
+          console.log("Trimitem aprobarea la server...");
+          
+          // PASUL CRITIC: Aici sunam la Backend-ul tau de Vercel
+          try {
+            await fetch('https://demo-flame-eta-27.vercel.app/payments/approve', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ paymentId }),
+            });
+            console.log("Cerere de aprobare trimisa!");
+          } catch (e) {
+            console.error("Serverul nu a raspuns:", e);
+          }
         },
-        onReadyForServerCompletion: (paymentId: string, txid: string) => {
-          alert("Plata reusita!");
+        onReadyForServerCompletion: async (paymentId: string, txid: string) => {
+          console.log("Finalizam plata...");
+          await fetch('https://demo-flame-eta-27.vercel.app/payments/complete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paymentId, txid }),
+          });
+          alert("Plata reusita! FitPot te asteapta in arena.");
         },
-        onCancel: (paymentId: string) => alert("Plata anulata."),
+        onCancel: (paymentId: string) => console.log("Anulat"),
         onError: (error: Error) => alert("Eroare: " + error.message),
       });
     } catch (err: any) {
-      alert("Eroare la initiere plata: " + err.message);
+      alert("Eroare: " + err.message);
     }
   };
 
   return (
     <div style={{ backgroundColor: '#000', color: '#fff', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', fontFamily: 'sans-serif', textAlign: 'center' }}>
-      <h1 style={{ color: '#8A2BE2' }}>FitPot 🏃‍♂️</h1>
-      <p>Status: Portofel Conectat</p>
-      <button 
-        onClick={handlePayment}
-        style={{ padding: '15px 30px', borderRadius: '30px', border: 'none', backgroundColor: '#8A2BE2', color: '#fff', fontWeight: 'bold', fontSize: '18px', cursor: 'pointer' }}
-      >
-        TEST PLATA PI
-      </button>
+      <h1 style={{ color: '#8A2BE2', fontSize: '3rem' }}>FitPot 🏃‍♂️</h1>
+      <p style={{ color: '#aaa' }}>Status: Gata de actiune</p>
+      <div style={{ padding: '20px', border: '1px solid #333', borderRadius: '15px', backgroundColor: '#111' }}>
+        <p>Miza de test: 0.1 Pi</p>
+        <button 
+          onClick={handlePayment}
+          style={{ padding: '15px 30px', borderRadius: '30px', border: 'none', backgroundColor: '#8A2BE2', color: '#fff', fontWeight: 'bold', fontSize: '18px', cursor: 'pointer' }}
+        >
+          TEST PLATA PI
+        </button>
+      </div>
     </div>
   );
 };
