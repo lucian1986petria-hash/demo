@@ -2,40 +2,56 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const FitPotApp = () => {
+  const containerStyle: React.CSSProperties = {
+    textAlign: 'center',
+    padding: '40px 20px',
+    fontFamily: 'sans-serif',
+    backgroundColor: '#121212',
+    color: '#ffffff',
+    minHeight: '100vh'
+  };
+
+  const cardStyle: React.CSSProperties = {
+    backgroundColor: '#1e1e1e',
+    borderRadius: '20px',
+    padding: '30px',
+    marginTop: '20px',
+    border: '1px solid #333',
+    boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
+  };
+
+  const buttonStyle: React.CSSProperties = {
+    backgroundColor: '#8A2BE2',
+    color: 'white',
+    border: 'none',
+    padding: '15px 30px',
+    borderRadius: '30px',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginTop: '20px',
+    cursor: 'pointer'
+  };
+
   return (
-    <div style={{ 
-      textAlign: 'center', 
-      padding: '50px', 
-      fontFamily: 'Arial, sans-serif',
-      backgroundColor: '#1a1a1a',
-      color: 'white',
-      minHeight: '100vh'
-    }}>
-      <h1 style={{ color: '#ffa500' }}>FitPot 🏃‍♂️💰</h1>
-      <p>Bine ai venit, Lucian!</p>
-      <div style={{ 
-        border: '2px solid #333', 
-        borderRadius: '15px', 
-        padding: '20px', 
-        margin: '20px auto',
-        maxWidth: '400px'
-      }}>
-        <h2>Pașii tăi: 0</h2>
-        <p>Miza curentă în Pot: 100 Pi</p>
-        <button style={{
-          backgroundColor: '#ffa500',
-          border: 'none',
-          padding: '15px 30px',
-          borderRadius: '25px',
-          fontSize: '18px',
-          fontWeight: 'bold',
-          cursor: 'pointer'
-        }} onClick={() => alert('Conectare la Pi Wallet...')}>
-          Plătește Taxa de Intrare (1 Pi)
+    <div style={containerStyle}>
+      <h1 style={{ color: '#A020F0', fontSize: '3rem', marginBottom: '10px' }}>FitPot</h1>
+      <p style={{ fontSize: '1.2rem', color: '#bbb' }}>Mergi. Câștigă. Repetă.</p>
+      
+      <div style={cardStyle}>
+        <div style={{ fontSize: '1.5rem', marginBottom: '10px' }}>👟 Pași astăzi</div>
+        <div style={{ fontSize: '3.5rem', fontWeight: 'bold', color: '#A020F0' }}>0</div>
+        <hr style={{ borderColor: '#333', margin: '20px 0' }} />
+        <p>Miza în Arena: <strong>10 Pi</strong></p>
+        <button 
+          style={buttonStyle}
+          onClick={() => window.alert('Se conectează la Pi Wallet...')}
+        >
+          INTRĂ ÎN ARENĂ
         </button>
       </div>
-      <p style={{ fontSize: '12px', marginTop: '50px' }}>
-        Conectat la Portofelul: GD6LEB...XNHP
+
+      <p style={{ marginTop: '40px', fontSize: '0.8rem', color: '#555' }}>
+        Portofel Destinație: GD6LEB...XNHP
       </p>
     </div>
   );
